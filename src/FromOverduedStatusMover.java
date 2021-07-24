@@ -1,23 +1,15 @@
 public class FromOverduedStatusMover extends BookMover{
     @Override
     public void moveToStatus(Book book, Status requestedStatus){
-        if ((book.getStatus()).equals(Status.OVERDUED)){
-            switch (requestedStatus){
-                case ARCHIVED:
-                    book.setStatus(Status.ARCHIVED);
-                    break;
-                case AVAILABLE:
-                    book.setStatus(Status.AVAILABLE);
-                    break;
-                case OVERDUED:
-                    System.out.println("Книга уже имеет этот статус");
-                    break;
-                default:
-                    System.out.println("Перевод книги из статуса" + book.getStatus() + "в статус" + requestedStatus + " невозможен");
-            }
-        } else {
-            System.out.println("Ошибка, " + requestedStatus + " не мой статус!");
+        String errorMessage = "Перевод книги из статуса `X` в статус `Y` невозможен";
+        if (book.getStatus() != Status.OVERDUED) {
+            System.out.println(errorMessage);
+            return;
         }
-        System.out.println("Статус книги: " + book.getStatus());
+        switch (requestedStatus) {
+            case AVAILABLE -> book.setStatus(Status.AVAILABLE);
+            case ARCHIVED -> book.setStatus(Status.ARCHIVED);
+            default -> System.out.println(errorMessage);
+        }
     }
 }
